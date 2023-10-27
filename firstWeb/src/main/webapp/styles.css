@@ -1,0 +1,21 @@
+@charset "ISO-8859-1";
+
+/* styles.css */
+
+/* Class selector with integer attributes */
+.myClass1 {
+    font-size: 16;
+    line-height: 1.5;
+}
+
+/* Class selector with hex color attribute */
+.myClass2 {
+    color: #ff5733;
+    background-color: #42f5bf;
+}
+
+/* Class selector with both integer and hex color attributes */
+.myClass3 {
+    font-size: 14;
+    color: #3498db;
+}
