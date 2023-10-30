@@ -1,81 +1,134 @@
+
 package CSSParser;
-
+ 
 import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
+import java.io.FileReader;
+
+import java.util.regex.Matcher;
+
+import java.util.regex.Pattern;
+ 
 public class CSSParser {
 
-    public static void main(String[] args) {
-    	String fileName = "C://Users/Ranjita.Hegde/Desktop/test.css";
-        Map<String, String> cssMap = readCSSFile(fileName);
+	public static void main(String[] args) {
 
-        // Print the class and attribute mappings
-        for (String cssClass : cssMap.keySet()) {
-            System.out.println("Class: " + cssClass);
-            String attributes = cssMap.get(cssClass);
-            System.out.println("Attributes:");
-            String[] attributeArray = attributes.split(";");
-            for (String attribute : attributeArray) {
-                if (!attribute.trim().isEmpty()) {
-                    String convertedAttribute = convertHexToRGB(attribute);
-                    System.out.println("  " + convertedAttribute.trim());
-                }
-            }
-            System.out.println("------------------------");
-        }
-    }
+		try {
 
-    public static Map<String, String> readCSSFile(String filePath) {
-        Map<String, String> cssMap = new HashMap<>();
+			String fileName = "C:\\Users\\Ranjita.Hegde\\Desktop\\test.css";
+																														// with
 
-        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
-            String line;
-            String cssClass = null;
+																														// your
 
-            while ((line = reader.readLine()) != null) {
-                line = line.trim();
+																														// CSS
 
-                // Check if the line contains a CSS class
-                if (line.startsWith(".")) {
-                    if (cssClass != null) {
-                        // Save the previous class and its attributes
-                        cssMap.put(cssClass,cssMap.get(cssClass).trim());
-                    }
-                    cssClass = line.substring(1); // Get the class name
-                } else if (cssClass != null) {
-                    // Append the line as an attribute for the current class
-                    cssMap.put(cssClass, cssMap.get(cssClass) + " "+line);
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+																														// file
 
-        return cssMap;
-    }
+																														// path
+ 
+			BufferedReader br = new BufferedReader(new FileReader(fileName));
 
-    public static String convertHexToRGB(String attribute) {
-        Pattern pattern = Pattern.compile("#[0-9A-Fa-f]{6}");
-        Matcher matcher = pattern.matcher(attribute);
+			StringBuilder cssContent = new StringBuilder();
 
-        while (matcher.find()) {
-            String hexColor = matcher.group();
-            String rgbColor = hexToRgb(hexColor);
-            attribute = attribute.replace(hexColor, rgbColor);
-        }
+			String line;
+ 
+			while ((line = br.readLine()) != null) {
 
-        return attribute;
-    }
+				cssContent.append(line).append("\n");
 
-    public static String hexToRgb(String hex) {
-        int r = Integer.parseInt(hex.substring(1, 3), 16);
-        int g = Integer.parseInt(hex.substring(3, 5), 16);
-        int b = Integer.parseInt(hex.substring(5, 7), 16);
-        return "rgb(" + r + ", " + g + ", " + b + ")";
-    }
+			}
+
+			br.close();
+ 
+			// Define regular expressions for class selectors, int attributes, and hex color
+
+			// attributes
+
+			String classSelectorRegex = "\\.([a-zA-Z0-9_-]+)\\s*\\{";
+
+			String intAttributeRegex = "([a-zA-Z-]+)\\s*:\\s*([0-9]+);";
+
+			String hexColorAttributeRegex = "([a-zA-Z-]+)\\s*:\\s*#([0-9a-fA-F]+);";
+ 
+			// Compile the regular expressions
+
+			Pattern classSelectorPattern = Pattern.compile(classSelectorRegex);
+
+			Pattern intAttributePattern = Pattern.compile(intAttributeRegex);
+
+			Pattern hexColorAttributePattern = Pattern.compile(hexColorAttributeRegex);
+ 
+			// Match and extract class selectors and attributes
+
+			Matcher classSelectorMatcher = classSelectorPattern.matcher(cssContent);
+
+			while (classSelectorMatcher.find()) {
+
+				String classSelector = classSelectorMatcher.group(1);
+
+				System.out.println("Class Selector: " + classSelector);
+ 
+				// Now, within the class selector, search for int attributes and hex color
+
+				// attributes
+
+				int startIndex = classSelectorMatcher.end();
+
+				int endIndex = cssContent.indexOf("}", startIndex);
+ 
+				String classContent = cssContent.substring(startIndex, endIndex);
+ 
+				Matcher intAttributeMatcher = intAttributePattern.matcher(classContent);
+
+				while (intAttributeMatcher.find()) {
+
+					String attributeName = intAttributeMatcher.group(1);
+
+					int attributeValue = Integer.parseInt(intAttributeMatcher.group(2));
+
+					System.out.println("Int Attribute: " + attributeName + " = " + attributeValue);
+
+				}
+ 
+				Matcher hexColorAttributeMatcher = hexColorAttributePattern.matcher(classContent);
+
+				while (hexColorAttributeMatcher.find()) {
+
+					String attributeName = hexColorAttributeMatcher.group(1);
+
+					String hexValue = hexColorAttributeMatcher.group(2);
+
+					String rgbValue = hexToRgb(hexValue);
+
+					System.out.println("Hex Color Attribute: " + attributeName + " = " + rgbValue);
+
+				}
+
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+
+	}
+ 
+	public static String hexToRgb(String hex) {
+
+		int colorValue = Integer.parseInt(hex, 16);
+
+		int red = (colorValue >> 16) & 0xFF;
+
+		int green = (colorValue >> 8) & 0xFF;
+
+		int blue = colorValue & 0xFF;
+
+		System.out.println(hex+"hello" + red +" ,"+ green + "," + blue );
+
+		return "rgb(" + red + "," + green + "," + blue + ")";
+
+
+	}
+
 }
