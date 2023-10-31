@@ -1,0 +1,7 @@
+2023-10-27 11:40:59,000 [Worker-5: Loading available Gradle versions] INFO  o.e.b.c.i.u.g.PublishedGradleVersions - Gradle version information cache is out-of-date. Trying to update.
+2023-10-27 11:42:39,588 [Worker-13: Building] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: com.valtech.training:first-maven-project:0.0.1-SNAPSHOT @ C:\Users\Ranjita.Hegde\valtech2023\valtech2023\first-maven-project\pom.xml.
+2023-10-27 11:42:41,185 [Worker-13: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-10-27 11:42:41,185 [Worker-13: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Ranjita.Hegde\valtech2023\valtech2023\first-maven-project\src\main\resources
+2023-10-27 11:42:41,195 [Worker-13: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-10-27 11:42:41,195 [Worker-13: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Ranjita.Hegde\valtech2023\valtech2023\first-maven-project\src\test\resources
+2023-10-27 11:42:42,383 [Worker-13: Building] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using NULL lifecycle mapping for MavenProject: com.valtech.training:mobile-rating-app:0.0.1-SNAPSHOT @ C:\Users\Ranjita.Hegde\valtech2023\valtech2023\mobile-rating-app\pom.xml.
